@@ -1,9 +1,19 @@
 import {useLocation, useNavigate, useParams } from "react-router-dom";
+import { useAppDispatch } from "../redux/store";
+import { useEffect } from "react";
+import {productSliceActions, ProductState} from "../redux/product";
 
 export function Product() {
     const navigater = useNavigate();
     const {productId} = useParams();
     const location = useLocation();
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        const productIdNum = Number(productId) || 0
+        const productState: ProductState = {productId: productIdNum}
+        dispatch(productSliceActions.setProductId(productState));
+    }, []);
 
     return (
         <>
