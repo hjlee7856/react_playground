@@ -8,20 +8,26 @@ import { NotFound } from './pages/NotFound'
 import { Product } from './pages/Product'
 import { Provider } from 'react-redux'
 import { store } from './redux/store'
+import Login from './pages/Login'
+import {QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
     <div>
-        <Provider store={store}>
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<App/>}/>
-                <Route path="/first" element={<First/>}/>
-                <Route path="/second" element={<Second/>}/>
-                <Route path="/product/:productId" element={<Product/>}/>
-                <Route path="*" element={<NotFound/>}/>
-            </Routes>
-        </BrowserRouter>
-        </Provider>
+        <QueryClientProvider client={queryClient}>
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<App/>}/>
+                        <Route path="/first" element={<First/>}/>
+                        <Route path="/second" element={<Second/>}/>
+                        <Route path="/login" element={<Login/>}/>
+                        <Route path="/product/:productId" element={<Product/>}/>
+                        <Route path="*" element={<NotFound/>}/>
+                    </Routes>
+                </BrowserRouter>
+            </Provider>
+        </QueryClientProvider>
     </div>
 )
