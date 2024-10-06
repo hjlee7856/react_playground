@@ -77,7 +77,7 @@ export default function Login() {
                     onChange={setPassword}
                 />
                 <button type="submit">Login</button>
-                <button type="button" onClick={() => {navigator('/')}}>back</button>
+                <button type="button" onClick={() => {navigator(-1)}}>back</button>
             </form>
         </>
     );
