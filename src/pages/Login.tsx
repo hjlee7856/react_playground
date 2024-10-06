@@ -1,15 +1,19 @@
-import {useState } from "react";
+import {useContext, useState } from "react";
 import axios from "axios";
-
+import { UserContext } from "../context/UserContextProvider";
+import { useNavigate } from "react-router-dom";
 
 interface LoginForm {
     uid: string;
     password: string;
 }
 
+const URL = 'http://localhost:8080/api/user/login'
+
 export default function Login() {
-    const URL = 'http://localhost:8080/api/user/login'
     const [loginState, setLoginState] = useState<LoginForm>({ uid: '', password: '' });
+    const navigator = useNavigate()
+    const { setUserState } = useContext(UserContext);
 
     const setUid = (e: React.ChangeEvent<HTMLInputElement>) => {
         setLoginState((prevState) => ({
@@ -50,6 +54,8 @@ export default function Login() {
 
             const data = await response.json();
             console.log("Fetch 응답 메시지:", data);
+            setUserState({name: data.name}); // Context API
+            navigator('/')
         } catch (error) {
             console.error("로그인 오류:", error);
         }
@@ -71,6 +77,7 @@ export default function Login() {
                     onChange={setPassword}
                 />
                 <button type="submit">Login</button>
+                <button type="button" onClick={() => {navigator('/')}}>back</button>
             </form>
         </>
     );
