@@ -2,6 +2,7 @@ import {useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../context/UserContextProvider";
 import { useNavigate } from "react-router-dom";
+import {Cookies} from 'react-cookie'
 
 interface LoginForm {
     uid: string;
@@ -54,6 +55,9 @@ export default function Login() {
 
             const data = await response.json();
             console.log("Fetch 응답 메시지:", data);
+            // 쿠키 저장 key, value, option
+            const cookies = new Cookies();
+            cookies.set("username", data.name, { path: '/'});
             setUserState({name: data.name}); // Context API
             navigator('/')
         } catch (error) {

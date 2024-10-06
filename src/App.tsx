@@ -11,26 +11,29 @@ import Login from './pages/Login'
 import {QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { UserContextProvider } from './context/UserContextProvider'
 import { Main } from './pages/Main'
+import { CookiesProvider } from 'react-cookie';
 
 const queryClient = new QueryClient();
 
 const App = () => {
     return (
         <QueryClientProvider client={queryClient}>
-            <UserContextProvider>
-                <Provider store={store}>
-                    <BrowserRouter>
-                        <Routes>
-                            <Route path="/" element={<Main />} />
-                            <Route path="/first" element={<First />} />
-                            <Route path="/second" element={<Second />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/product/:productId" element={<Product />} />
-                            <Route path="*" element={<NotFound />} />
-                        </Routes>
-                    </BrowserRouter>
-                </Provider>
-            </UserContextProvider>
+            <CookiesProvider>
+                <UserContextProvider>
+                    <Provider store={store}>
+                        <BrowserRouter>
+                            <Routes>
+                                <Route path="/" element={<Main />} />
+                                <Route path="/first" element={<First />} />
+                                <Route path="/second" element={<Second />} />
+                                <Route path="/login" element={<Login />} />
+                                <Route path="/product/:productId" element={<Product />} />
+                                <Route path="*" element={<NotFound />} />
+                            </Routes>
+                        </BrowserRouter>
+                    </Provider>
+                </UserContextProvider>
+            </CookiesProvider>
         </QueryClientProvider>
     );
 };
